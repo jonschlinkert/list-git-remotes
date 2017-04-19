@@ -1,7 +1,7 @@
 {
   "name": "list-git-remotes",
   "description": "List the remotes for a local git repository. Sync and async.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/jonschlinkert/list-git-remotes",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/list-git-remotes",
