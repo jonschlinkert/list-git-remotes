@@ -20,7 +20,6 @@ function remotes(cwd, cb) {
       return;
     }
     cb(null, parseRemotes(stdout));
-    return;
   });
 }
 
