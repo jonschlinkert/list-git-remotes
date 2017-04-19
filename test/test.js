@@ -7,7 +7,8 @@ var assert = require('assert');
 var mkdirp = require('mkdirp');
 var rimraf = require('rimraf');
 var remotes = require('..');
-var git = require('gitty');
+var addRemote = require('./support/remote');
+var gfc = require('gfc');
 
 var fixtures = path.resolve.bind(path, __dirname, 'fixtures');
 
@@ -25,14 +26,16 @@ describe('list-git-remotes', function() {
   describe('remotes', function() {
     before(function(cb) {
       rimraf.sync(fixtures());
-      mkdirp(fixtures());
-
-      var repo = git(fixtures());
-      repo.initSync();
-      repo.addRemoteSync('foo', 'https://foo.git');
-      repo.addRemoteSync('bar', 'https://bar.git');
-      repo.addRemoteSync('baz', 'https://baz.git');
-      cb();
+      gfc(fixtures(), function(err) {
+        if (err) {
+          cb(err);
+          return;
+        }
+        addRemote(fixtures(), 'foo', 'https://foo.git');
+        addRemote(fixtures(), 'bar', 'https://bar.git');
+        addRemote(fixtures(), 'baz', 'https://baz.git');
+        cb();
+      });
     });
 
     after(function(cb) {
