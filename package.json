@@ -1,6 +1,6 @@
 {
   "name": "list-git-remotes",
-  "description": "List the remotes for a git repository. Sync and async.",
+  "description": "List the remotes for a local git repository. Sync and async.",
   "version": "0.1.0",
   "homepage": "https://github.com/jonschlinkert/list-git-remotes",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
@@ -14,13 +14,12 @@
   ],
   "main": "index.js",
   "engines": {
-    "node": ">=4"
+    "node": ">=0.12.0"
   },
   "scripts": {
     "test": "mocha"
   },
   "keywords": [
-    "generategenerator",
     "git",
     "list",
     "remotes"
@@ -29,7 +28,11 @@
     "extend-shallow": "^2.0.1"
   },
   "devDependencies": {
-    "gulp-format-md": "^0.1.12"
+    "gitty": "^3.6.0",
+    "gulp-format-md": "^0.1.12",
+    "mkdirp": "^0.5.1",
+    "mocha": "^3.2.0",
+    "rimraf": "^2.6.1"
   },
   "verb": {
     "toc": false,
@@ -40,6 +43,14 @@
     "plugins": [
       "gulp-format-md"
     ],
+    "related": {
+      "list": [
+        "git-branch",
+        "git-user-name",
+        "git-username",
+        "git-user-email"
+      ]
+    },
     "lint": {
       "reflinks": true
     }

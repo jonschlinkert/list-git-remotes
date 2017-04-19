@@ -1,7 +1,7 @@
 var remotes = require('./');
 
-console.log(remotes.sync('.git'));
+console.log(remotes.sync('.'));
 
-remotes('./.git', function(err, res) {
+remotes('.', function(err, res) {
   console.log(err, res);
 });

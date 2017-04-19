@@ -3,13 +3,17 @@
 var os = require('os');
 var cp = require('child_process');
 var extend = require('extend-shallow');
-module.exports = listRemotes;
 
 /**
- * Asynchronously list the remotes for a git repository
+ * asynch
  */
 
-function listRemotes(cwd, cb) {
+function remotes(cwd, cb) {
+  if (typeof cwd === 'function') {
+    cb = cwd;
+    cwd = process.cwd();
+  }
+
   cp.exec('git remote -v', {cwd: cwd}, function(err, stdout, stderr) {
     if (err) {
       cb(err, null, String(stderr).trim());
@@ -21,22 +25,27 @@ function listRemotes(cwd, cb) {
 }
 
 /**
- * Synchronously list the remotes for a git repository
+ * sync
  */
 
-listRemotes.sync = function(cwd, options) {
+remotes.sync = function(cwd, options) {
+  if (typeof cwd !== 'string') {
+    options = cwd;
+    cwd = process.cwd();
+  }
+
   var defaults = {timeout: 3000, killSignal: 'SIGKILL'};
   var opts = extend({}, defaults, options, {cwd: cwd});
   var buf = cp.execSync('git remote -v', opts);
-  return parseRemotes(buf.toString());
+  return parseRemotes(String(buf));
 };
 
 /**
  * Parse the remotes into an object
  */
 
-function parseRemotes(buf) {
-  var lines = String(buf).trim().split(os.EOL);
+function parseRemotes(str) {
+  var lines = str.trim().split(os.EOL);
   var remotes = {};
   for (var i = 0; i < lines.length; i++) {
     var line = lines[i];
@@ -48,3 +57,9 @@ function parseRemotes(buf) {
   }
   return remotes;
 }
+
+/**
+ * Expose `remotes`
+ */
+
+module.exports = remotes;
